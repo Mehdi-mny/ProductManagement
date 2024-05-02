@@ -1,5 +1,6 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +9,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Creation</title>
+    <title>Products List</title>
 </head>
 <body>
 <header>
@@ -29,7 +30,7 @@
             <div class="collapse navbar-collapse" id="navbarExample01">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item active">
-                        <a class="nav-link" href="listProduct">Products List</a>
+                        <a class="nav-link" href="createProduct">Create Customer</a>
                     </li>
                 </ul>
             </div>
@@ -39,45 +40,35 @@
 
     <!-- Jumbotron -->
     <div class="p-1 text-center bg-light">
-        <h1 class="mb-3">Product Creation - JSP</h1>
+        <h1 class="mb-3">Products List - JSP</h1>
     </div>
     <!-- Jumbotron -->
 </header>
 <main class="container mt-5">
-    <form action="saveProduct" method="post">
-        <div>
-            <label for="Name">Name : </label>
-            <input type="text" id="Name" name="Name">
-        </div>
-        <div>
-            <label for="category">Category:</label><select id="category" name="category">
-                <c:forEach items="${categoriesList}" var="category">
-                    <option value="${category.id}">${category.name}</option>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">NAME</th>
+                <th scope="col">QUANTITY</th>
+                <th scope="col">CATEGORY</th>
+                <th scope="col">PROVIDER</th>
+                <th scope="col">COST PRICE</th>
+                <th scope="col">UNIT PRICE</th>
+            </tr>
+            </thead>
+            <tbody>
+                <c:forEach items="${productvue}" var="product">
+                    <tr>
+                        <td>${product.name}</td>
+                        <td>${product.quantity}</td>
+                        <td>${product.category}</td>
+                        <td>${product.provider}</td>
+                        <td>${product.unit_cost}</td>
+                        <td>${product.unit_price}</td>
+                    </tr>
                 </c:forEach>
-            </select>
-        </div>
-
-        <div>
-            <label for="Provider">Provider : </label>
-            <input type="text" id="Provider" name="Provider">
-        </div>
-        <div>
-            <label for="unit_cost">Unit Cost : </label>
-            <input type="number" id="unit_cost" name="unit_cost">
-        </div>
-        <div>
-            <label for="unit_price">Unit Price : </label>
-            <input type="number" id="unit_price" name="unit_price">
-        </div>
-        <div>
-            <label for="image">Image : </label>
-            <input type="file" id="image" name="image" alt="test">
-        </div>
-        <div>
-            <input type="submit" value="Save">
-        </div>
-    </form>
-
+            </tbody>
+        </table>
 </main>
 
 <footer class="text-center text-lg-start bg-light text-muted">

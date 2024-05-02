@@ -17,9 +17,9 @@ import java.util.List;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String Id;
+    private Long Id;
     private String name;
     private String unit;
-    @OneToMany(mappedBy ="product",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy ="category",fetch = FetchType.LAZY)
     private List<Product> Products=new ArrayList<>();
 }

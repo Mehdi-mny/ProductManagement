@@ -1,6 +1,5 @@
 package com.example.productmanagement.Entities;
 
-import com.google.zxing.common.BitMatrix;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,7 +15,7 @@ import java.awt.*;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String Ref;
+    private Long Id;
     private String name;
     private String provider;
     private int quantity;
@@ -25,9 +24,8 @@ public class Product {
     @Lob
     private byte[] image;
     @Lob
-    private byte[] QRcode;
-
-    @ManyToOne(fetch =FetchType.EAGER)
-    private Category Category;
+    private byte[] qrcode;
+    @ManyToOne
+    private Category category;
 
 }

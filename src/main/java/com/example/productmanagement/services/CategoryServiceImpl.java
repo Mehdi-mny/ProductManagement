@@ -2,10 +2,12 @@ package com.example.productmanagement.services;
 
 import com.example.productmanagement.Entities.Category;
 import com.example.productmanagement.repositories.CategoryRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
+@AllArgsConstructor
 public class CategoryServiceImpl implements CategoryService{
     private CategoryRepository categoryRepository;
     @Override
