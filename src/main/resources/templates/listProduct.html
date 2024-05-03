@@ -1,11 +1,7 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ page contentType="text/html; charset=UTF-8"%>
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" type="text/css" href="webjars/bootstrap/5.3.3/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" />
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,7 +26,7 @@
             <div class="collapse navbar-collapse" id="navbarExample01">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item active">
-                        <a class="nav-link" href="createProduct">Create Product</a>
+                        <a class="nav-link" th:href="@{/createProduct}">Create Product</a>
                     </li>
                 </ul>
             </div>
@@ -40,39 +36,35 @@
 
     <!-- Jumbotron -->
     <div class="p-1 text-center bg-light">
-        <h1 class="mb-3">Products List - JSP</h1>
+        <h1 class="mb-3">Products List - Thymeleaf</h1>
     </div>
     <!-- Jumbotron -->
 </header>
 <main class="container mt-5">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th scope="col">NAME</th>
-                <th scope="col">QUANTITY</th>
-                <th scope="col">CATEGORY</th>
-                <th scope="col">PROVIDER</th>
-                <th scope="col">COST PRICE</th>
-                <th scope="col">UNIT PRICE</th>
-                <th scope="col">IMAGE</th>
-            </tr>
-            </thead>
-            <tbody>
-                <c:forEach items="${productvue}" var="product">
-                    <tr>
-                        <td>${product.name}</td>
-                        <td>${product.quantity}</td>
-                        <td>${product.category.name}</td>
-                        <td>${product.provider}</td>
-                        <td>${product.unit_cost}</td>
-                        <td>${product.unit_price}</td>
-
-                        <td><img height="250px"  th:src="@{/images/football.jpg}" alt=""></td>
-
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">NAME</th>
+            <th scope="col">QUANTITY</th>
+            <th scope="col">CATEGORY</th>
+            <th scope="col">PROVIDER</th>
+            <th scope="col">COST PRICE</th>
+            <th scope="col">UNIT PRICE</th>
+            <th scope="col">IMAGE</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product : ${productvue}">
+            <td th:text="${product.name}"></td>
+            <td th:text="${product.quantity}"></td>
+            <td th:text="${product.category.name}"></td>
+            <td th:text="${product.provider}"></td>
+            <td th:text="${product.unit_cost}"></td>
+            <td th:text="${product.unit_price}"></td>
+            <td><img alt="" th:src="|data:image/jpeg;base64,${product.image}|" ></td>
+        </tr>
+        </tbody>
+    </table>
     <button class="btn btn-primary" onclick="window.print()">Imprimer</button>
 </main>
 
@@ -84,4 +76,3 @@
 </footer>
 </body>
 </html>
-

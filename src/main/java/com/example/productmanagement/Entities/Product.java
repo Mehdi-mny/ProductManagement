@@ -7,6 +7,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.awt.*;
+import java.sql.Blob;
+import java.util.Base64;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -22,10 +25,12 @@ public class Product {
     private double unit_cost;
     private double unit_price;
     @Lob
-    private byte[] image;
+    @Column(columnDefinition = "MEDIUMBLOB")
+    private String image;
     @Lob
-    private byte[] qrcode;
+    private String qrcode;
     @ManyToOne
     private Category category;
+
 
 }

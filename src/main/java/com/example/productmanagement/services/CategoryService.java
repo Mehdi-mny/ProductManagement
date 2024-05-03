@@ -11,8 +11,8 @@ import java.util.List;
 public interface CategoryService {
     Category saveCategory(Category Category);
     Category updateCategory(Category Category);
-    void deleteCategory(String Ref);
+    void deleteCategory(Long Id);
     void deleteAllCategories();
-    Category findCategoryById(String Ref);
+    Category findCategoryById(Long Id);
     List<Category> findAllCategories();
 }

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Customers Data</title>
+</head>
+<body>
+<h1>Upload Customers Data</h1>
+
+
+<!-- Formulaire pour télécharger le fichier Excel -->
+<form th:action="@{/upload-Products}" th:object="${fileForm}" method="post" enctype="multipart/form-data">
+    <input type="file" id="file" name="file" accept=".xlsx, .xls">
+    <button type="submit">Upload</button>
+</form>
+
+<!-- Add any additional content or messages here -->
+</body>
+</html>
