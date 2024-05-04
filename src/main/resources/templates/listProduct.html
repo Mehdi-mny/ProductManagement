@@ -1,73 +1,113 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" />
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products List</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa; /* Bootstrap background color */
+            color: #495057; /* Bootstrap text color */
+        }
+
+        .navbar {
+            background-color: #fff; /* White background for navbar */
+        }
+
+        .jumbotron {
+            background-color: #e9ecef; /* Light grey background for jumbotron */
+        }
+
+        .container {
+            margin-top: 20px; /* Space between header and main content */
+        }
+
+        .table th,
+        .table td {
+            vertical-align: middle; /* Align table cell content vertically centered */
+        }
+
+        .img-thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 50%; /* Circular thumbnails */
+        }
+
+        .btn-primary {
+            background-color: #007bff; /* Blue primary button */
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0069d9; /* Darker blue on hover */
+            border-color: #0062cc;
+        }
+
+        footer {
+            background-color: #f8f9fa; /* Light grey background for footer */
+            color: #6c757d; /* Grey text color for footer */
+        }
+    </style>
 </head>
 <body>
 <header>
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
         <div class="container-fluid">
-            <button
-                    class="navbar-toggler"
-                    type="button"
-                    data-mdb-toggle="collapse"
-                    data-mdb-target="#navbarExample01"
-                    aria-controls="navbarExample01"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-            >
+            <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarExample01" aria-controls="navbarExample01" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fas fa-bars"></i>
             </button>
-            <div class="collapse navbar-collapse" id="navbarExample01">
+            <div class="collapse navbar-collapse" id="navbarExample02">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" th:href="@{/createProduct}">Create Product</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/Excelsheet}">Create with Excel</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-    <!-- Navbar -->
-
-    <!-- Jumbotron -->
-    <div class="p-1 text-center bg-light">
-        <h1 class="mb-3">Products List - Thymeleaf</h1>
-    </div>
-    <!-- Jumbotron -->
+    <section class="jumbotron p-1 text-center bg-light">
+        <h1 class="mb-3">Products List </h1>
+    </section>
 </header>
 <main class="container mt-5">
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th scope="col">NAME</th>
-            <th scope="col">QUANTITY</th>
-            <th scope="col">CATEGORY</th>
-            <th scope="col">PROVIDER</th>
-            <th scope="col">COST PRICE</th>
-            <th scope="col">UNIT PRICE</th>
-            <th scope="col">IMAGE</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="product : ${productvue}">
-            <td th:text="${product.name}"></td>
-            <td th:text="${product.quantity}"></td>
-            <td th:text="${product.category.name}"></td>
-            <td th:text="${product.provider}"></td>
-            <td th:text="${product.unit_cost}"></td>
-            <td th:text="${product.unit_price}"></td>
-            <td><img alt="" th:src="|data:image/jpeg;base64,${product.image}|" ></td>
-        </tr>
-        </tbody>
-    </table>
-    <button class="btn btn-primary" onclick="window.print()">Imprimer</button>
+    <section class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">NAME</th>
+                <th scope="col">QUANTITY</th>
+                <th scope="col">CATEGORY</th>
+                <th scope="col">PROVIDER</th>
+                <th scope="col">COST PRICE</th>
+                <th scope="col">UNIT PRICE</th>
+                <th scope="col">IMAGE</th>
+                <th scope="col">QRCODE</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product : ${productvue}">
+                <td th:text="${product.name}"></td>
+                <td th:text="${product.quantity}"></td>
+                <td th:text="${product.category.name}"></td>
+                <td th:text="${product.provider}"></td>
+                <td th:text="${product.unit_cost}"></td>
+                <td th:text="${product.unit_price}"></td>
+                <td><img alt="Product Image" th:src="|data:image/jpeg;base64,${product.image}|" class="img-thumbnail"></td>
+                <td><img alt="Product QRCode" th:src="|data:image/jpeg;base64,${product.qrcode}|" class="img-thumbnail"></td>
+            </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-primary float-end" onclick="window.print()">Imprimer</button>
+    </section>
 </main>
-
 <footer class="text-center text-lg-start bg-light text-muted">
     <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
         © 2023 Copyright:

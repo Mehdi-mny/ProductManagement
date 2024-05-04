@@ -1,6 +1,7 @@
 package com.example.productmanagement.services;
 
 import com.example.productmanagement.Entities.Product;
+import com.google.zxing.WriterException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -10,7 +11,7 @@ import java.util.List;
 @Service
 @Qualifier("defaultProductService")
 public interface ProductService {
-    Product saveProduct(Product Product,MultipartFile file)throws IOException;
+    Product saveProduct(Product Product,MultipartFile file) throws IOException, WriterException;
     Product updateProduct(Product Product);
     void deleteProduct(Long Id);
     void deleteAllProducts();

@@ -6,26 +6,96 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Creation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa; /* Bootstrap background color */
+            color: #495057; /* Bootstrap text color */
+        }
+
+        .navbar {
+            background-color: #fff; /* White background for navbar */
+            border-bottom: 1px solid #dee2e6; /* Bootstrap border color */
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+        }
+
+        .jumbotron {
+            background-color: #e9ecef; /* Light grey background for jumbotron */
+            border-radius: 10px; /* Rounded corners */
+            padding: 20px;
+            margin-bottom: 20px; /* Space between header and main content */
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ced4da; /* Bootstrap input border color */
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="file"] {
+            margin-top: 10px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff; /* Blue primary button */
+            border: none;
+            border-radius: 5px;
+            color: #fff; /* White text color */
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+        footer {
+            background-color: #f8f9fa; /* Light grey background for footer */
+            color: #6c757d; /* Grey text color for footer */
+            border-top: 1px solid #dee2e6; /* Bootstrap border color */
+            padding: 20px 0;
+        }
+        .success-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            text-align: center;
+            padding: 10px 0;
+            background-color: #28a745; /* Couleur de fond verte pour le message de succès */
+            color: #fff; /* Couleur du texte blanc pour le message de succès */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombre légère pour la profondeur */
+        }
+
+        main {
+            margin-top: 40px; /* Ajoute de la marge en haut du contenu principal */
+        }
+    </style>
 </head>
 <body>
 <header>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+    <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container-fluid">
-            <button
-                    class="navbar-toggler"
-                    type="button"
-                    data-mdb-toggle="collapse"
-                    data-mdb-target="#navbarExample01"
-                    aria-controls="navbarExample01"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-            >
-                <i class="fas fa-bars"></i>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarExample01">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item active">
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
                         <a class="nav-link" th:href="@{/listProduct}">Products List</a>
                     </li>
                 </ul>
@@ -35,51 +105,69 @@
     <!-- Navbar -->
 
     <!-- Jumbotron -->
-    <div class="p-1 text-center bg-light">
-        <h1 class="mb-3">Product Creation - Thymeleaf</h1>
+    <div class="jumbotron text-center">
+        <h1 class="mb-3">Product Creation</h1>
     </div>
     <!-- Jumbotron -->
+
+    <div th:if="${successMessage}" class="alert alert-success success-message" role="alert">
+        <p th:text="${successMessage}"></p>
+    </div>
 </header>
 <main class="container mt-5">
     <form th:action="@{/saveProduct}" method="post" enctype="multipart/form-data">
-        <div>
-            <label for="Name">Name : </label>
-            <input type="text" id="Name" name="Name">
+        <div class="mb-3">
+            <label for="Name">Name:</label>
+            <input type="text" id="Name" name="Name" required>
         </div>
-        <div>
+        <div class="mb-3">
             <label for="category">Category:</label>
-            <select id="category" name="category">
+            <select id="category" name="category" required>
+                <option value="">Select Category</option>
                 <option th:each="category : ${categoriesList}" th:value="${category.id}" th:text="${category.name}"></option>
             </select>
         </div>
-
-        <div>
-            <label for="Provider">Provider : </label>
-            <input type="text" id="Provider" name="Provider">
+        <div class="mb-3">
+            <label for="Provider">Provider:</label>
+            <input type="text" id="Provider" name="Provider" required>
         </div>
-        <div>
-            <label for="unit_cost">Unit Cost : </label>
-            <input type="number" id="unit_cost" name="unit_cost">
+        <div class="mb-3">
+            <label for="unit_cost">Unit Cost:</label>
+            <input type="number" id="unit_cost" name="unit_cost" required>
         </div>
-        <div>
-            <label for="unit_price">Unit Price : </label>
-            <input type="number" id="unit_price" name="unit_price">
+        <div class="mb-3">
+            <label for="unit_price">Unit Price:</label>
+            <input type="number" id="unit_price" name="unit_price" required>
         </div>
-        <div>
-            <label for="image">Image : </label>
-            <input type="file" id="image" name="imageFile" alt="test">
+        <div class="mb-3">
+            <label for="image">Image:</label>
+            <input type="file" id="image" name="imageFile" required>
         </div>
         <div>
             <input type="submit" value="Save">
         </div>
     </form>
 </main>
-
 <footer class="text-center text-lg-start bg-light text-muted">
     <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
         © 2023 Copyright:
         <a class="text-reset fw-bold" href="http://6solutions.com/">6solutions.com</a>
     </div>
 </footer>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var successMessage = document.querySelector(".success-message");
+        var productsListButton = document.querySelector(".nav-link[href='/listProduct']");
+        if (successMessage && productsListButton) {
+            productsListButton.style.marginTop = successMessage.offsetHeight + "px";
+            // Masquer le message de succès après 5 secondes (5000 millisecondes)
+            setTimeout(function() {
+                successMessage.style.display = "none";
+                // Réinitialiser la marge supérieure du bouton "Products List"
+                productsListButton.style.marginTop = "0";
+            }, 2000);
+        }
+    });
+</script>
 </body>
 </html>

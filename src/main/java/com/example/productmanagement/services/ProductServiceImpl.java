@@ -2,7 +2,13 @@ package com.example.productmanagement.services;
 
 import com.example.productmanagement.Entities.Product;
 import com.example.productmanagement.repositories.ProductRepository;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import lombok.AllArgsConstructor;
+import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,8 +20,15 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService{
     private ProductRepository productRepository;
     @Override
-    public Product saveProduct(Product Product, MultipartFile file) throws IOException {
+    public Product saveProduct(Product Product, MultipartFile file) throws IOException, WriterException {
         Product.setImage(Base64.getEncoder().encodeToString(file.getBytes()));
+        String qrCodeData = "Product Name: \n" +
+                Product.getName() + "\n" +
+                "Provider: " + Product.getProvider();
+        byte[] qrCodeBytes = generateQRCode(qrCodeData);
+
+        // Set the QR code bytes in the product object
+        Product.setQrcode(Base64.getEncoder().encodeToString(qrCodeBytes));
         return productRepository.save(Product);
     }
     @Override
@@ -46,11 +59,18 @@ public class ProductServiceImpl implements ProductService{
     public void saveProductsFromExcel(MultipartFile file){
         if(ExcelUploadService.isValidExcelFile(file)){
             try {
-                List<Product> products = ExcelUploadService.getCustomersDataFromExcel(file.getInputStream());
-                this.productRepository.saveAll(products);
+                List<Product> products = ExcelUploadService.getProductsDataFromExcel(file.getInputStream());
+               this.productRepository.saveAll(products);
             } catch (IOException e) {
                 throw new IllegalArgumentException("The file is not a valid excel file");
             }
         }
+    }
+    private byte[] generateQRCode(String data) throws IOException, WriterException {
+        QRCodeWriter writer = new QRCodeWriter();
+        BitMatrix matrix = writer.encode(data, BarcodeFormat.QR_CODE, 2, 2);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        MatrixToImageWriter.writeToStream(matrix, "jpeg", outputStream);
+        return outputStream.toByteArray();
     }
 }

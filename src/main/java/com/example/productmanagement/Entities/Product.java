@@ -28,6 +28,7 @@ public class Product {
     @Column(columnDefinition = "MEDIUMBLOB")
     private String image;
     @Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
     private String qrcode;
     @ManyToOne
     private Category category;
