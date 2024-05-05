@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 @Qualifier("defaultProductService")
 public interface ProductService {
-    Product saveProduct(Product Product,MultipartFile file) throws IOException, WriterException;
+    void saveProduct(Product Product,MultipartFile file) throws IOException, WriterException;
     Product updateProduct(Product Product);
     void deleteProduct(Long Id);
     void deleteAllProducts();

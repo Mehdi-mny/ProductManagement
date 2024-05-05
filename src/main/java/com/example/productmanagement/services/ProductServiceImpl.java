@@ -20,16 +20,25 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService{
     private ProductRepository productRepository;
     @Override
-    public Product saveProduct(Product Product, MultipartFile file) throws IOException, WriterException {
+    public void saveProduct(Product Product, MultipartFile file) throws IOException, WriterException {
         Product.setImage(Base64.getEncoder().encodeToString(file.getBytes()));
+        // Set the QR code bytes in the product object
+        Product.setQrcode(Base64.getEncoder().encodeToString(this.qrcode(Product)));
+        productRepository.save(Product);
+    }
+    public void saveProduct(Product Product) throws IOException, WriterException {
+        // Set the QR code bytes in the product object
+        Product.setQrcode(Base64.getEncoder().encodeToString(this.qrcode(Product)));
+        productRepository.save(Product);
+    }
+    public byte[] qrcode(Product Product) throws IOException, WriterException {
         String qrCodeData = "Product Name: \n" +
                 Product.getName() + "\n" +
                 "Provider: " + Product.getProvider();
-        byte[] qrCodeBytes = generateQRCode(qrCodeData);
 
         // Set the QR code bytes in the product object
-        Product.setQrcode(Base64.getEncoder().encodeToString(qrCodeBytes));
-        return productRepository.save(Product);
+
+        return generateQRCode(qrCodeData);
     }
     @Override
     public Product updateProduct(Product Product) {
@@ -60,9 +69,13 @@ public class ProductServiceImpl implements ProductService{
         if(ExcelUploadService.isValidExcelFile(file)){
             try {
                 List<Product> products = ExcelUploadService.getProductsDataFromExcel(file.getInputStream());
-               this.productRepository.saveAll(products);
+               for(Product product:products){
+                this.saveProduct(product);
+               }
             } catch (IOException e) {
                 throw new IllegalArgumentException("The file is not a valid excel file");
+            } catch (WriterException e) {
+                throw new RuntimeException(e);
             }
         }
     }
