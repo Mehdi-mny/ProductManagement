@@ -43,24 +43,21 @@ public class ExcelUploadService {
                     Cell cell = cellIterator.next();
                     switch (cellIndex) {
                         case 0:
-                            product.setId((long) cell.getNumericCellValue());
-                            break;
-                        case 1:
                             product.setName(cell.getStringCellValue());
                             break;
-                        case 2:
+                        case 1:
                             product.setProvider(cell.getStringCellValue());
                             break;
-                        case 3:
+                        case 2:
                             product.setQuantity((int) cell.getNumericCellValue());
                             break;
-                        case 4:
+                        case 3:
                             product.setUnit_cost((int) cell.getNumericCellValue());
                             break;
-                        case 5:
+                        case 4:
                             product.setUnit_price((int) cell.getNumericCellValue());
                             break;
-                        case 6:
+                        case 5:
                             // Here, we assume that the category name is stored in the 7th column (index 6)
                             String categoryName = cell.getStringCellValue();
                             Category existingCategory = categoryRepository.findByName(categoryName);
@@ -72,14 +69,6 @@ public class ExcelUploadService {
                             }
                             product.setCategory(category);
                             break;
-                        case 7:
-                                // Gérer le cas où la cellule contient une image encodée en base64
-                                String imageDataUrl = cell.getStringCellValue();
-                                // Extraire les données de l'image en bytes
-                                String base64Image = imageDataUrl.split(",")[1];
-                                byte[] imageData = Base64.getDecoder().decode(base64Image);
-                                // Stocker les données de l'image dans le produit
-                                product.setImage(Base64.getEncoder().encodeToString(imageData));
                         default:
                         break;
                     }

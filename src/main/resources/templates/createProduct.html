@@ -132,6 +132,10 @@
             <input type="text" id="Provider" name="Provider" required>
         </div>
         <div class="mb-3">
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" required>
+        </div>
+        <div class="mb-3">
             <label for="unit_cost">Unit Cost:</label>
             <input type="number" id="unit_cost" name="unit_cost" required>
         </div>
@@ -157,7 +161,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         var successMessage = document.querySelector(".success-message");
-        var productsListButton = document.querySelector(".nav-link[href='/listProduct']");
+        var productsListButton = document.querySelector(".nav-link[href='/createProduct']");
         if (successMessage && productsListButton) {
             productsListButton.style.marginTop = successMessage.offsetHeight + "px";
             // Masquer le message de succès après 5 secondes (5000 millisecondes)

@@ -49,7 +49,14 @@ public class ProductController {
         ProductService.saveProduct(productController,image);
         return "redirect:createProduct";
     }
-
+    @RequestMapping("/deleteProduct")
+    public String deleteProduct(@RequestParam("productId") Long productId, RedirectAttributes redirectAttributes) {
+        // Call your ProductService method to delete the product by ID
+        ProductService.deleteProduct(productId);
+        redirectAttributes.addFlashAttribute("deleteMessage", "Product deleted successfully!");
+        // Redirect to the product list page after deletion
+        return "redirect:/listProduct";
+    }
     @RequestMapping("/listProduct")
     public String listProduct(ModelMap modelMap){
         List<Product> productList = ProductService.getAllProducts();
