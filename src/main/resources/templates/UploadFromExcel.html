@@ -4,9 +4,24 @@
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" />
     <meta charset="UTF-8">
     <title>Upload Products Data From Excel</title>
+    <style>
+        .wrapper {
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+    }
+
+        footer {
+            background-color: #f8f9fa; /* Light grey background for footer */
+            color: #6c757d; /* Grey text color for footer */
+            margin-top: 10px;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-
+<div class="wrapper">
 <header>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
@@ -25,7 +40,7 @@
             <div class="collapse navbar-collapse" id="navbarExample01">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item active">
-                        <a class="nav-link" th:href="@{/listProduct}">Products List</a>
+                        <a class="nav-link" th:href="@{/createProduct}">Back</a>
                     </li>
                 </ul>
             </div>
@@ -52,10 +67,9 @@
 
 <footer class="text-center text-lg-start bg-light text-muted">
     <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-        © 2023 Copyright:
-        <a class="text-reset fw-bold" href="http://6solutions.com/">6solutions.com</a>
+        © 2024 Copyright
     </div>
 </footer>
-
+</div>
 </body>
 </html>

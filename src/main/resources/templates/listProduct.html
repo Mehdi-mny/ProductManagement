@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products List</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}"/>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -48,10 +48,19 @@
             border-color: #0062cc;
         }
 
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
+        }
+
         footer {
             background-color: #f8f9fa; /* Light grey background for footer */
-            color: #6c757d; /* Grey text color for footer */
+            color: #6c757d;
+            margin-top: 10px;
+            width: 100%;
         }
+
         .alert-danger {
             position: fixed;
             top: 0; /* Positionnez le message en haut de la page */
@@ -72,74 +81,72 @@
     <span th:text="${deleteMessage}"></span>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
-<header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-white">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarExample01" aria-controls="navbarExample01" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarExample02">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/createProduct}">Create Product</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/Excelsheet}">Create with Excel</a>
-                    </li>
-                </ul>
+<div class="wrapper">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse justify-content-end" id="navbarExample02">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/createProduct}">Back</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-    <section class="jumbotron p-1 text-center bg-light">
-        <h1 class="mb-3">Products List </h1>
-    </section>
+        </nav>
+        <section class="jumbotron p-1 text-center bg-light">
+            <h1 class="mb-3">Products List </h1>
+        </section>
 
-</header>
-<main class="container mt-5">
-    <section class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th scope="col">NAME</th>
-                <th scope="col">QUANTITY</th>
-                <th scope="col">CATEGORY</th>
-                <th scope="col">PROVIDER</th>
-                <th scope="col">COST PRICE</th>
-                <th scope="col">UNIT PRICE</th>
-                <th scope="col">IMAGE</th>
-                <th scope="col">QRCODE</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="product : ${productvue}">
-                <td th:text="${product.name}"></td>
-                <td th:text="${product.quantity}"></td>
-                <td th:text="${product.category.name}"></td>
-                <td th:text="${product.provider}"></td>
-                <td th:text="${product.unit_cost}"></td>
-                <td th:text="${product.unit_price}"></td>
-                <td><img alt="Product Image" th:src="|data:image/jpeg;base64,${product.image}|" class="img-thumbnail"></td>
-                <td><img alt="Product QRCode" th:src="|data:image/jpeg;base64,${product.qrcode}|" class="img-thumbnail"></td>
-                <td>
-                    <form th:action="@{/deleteProduct}" method="post">
-                        <input type="hidden" name="productId" th:value="${product.id}">
-                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <button class="btn btn-primary float-end" onclick="window.print()">Imprimer</button>
-    </section>
-</main>
-<footer class="text-center text-lg-start bg-light text-muted">
-    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-        © 2023 Copyright:
-        <a class="text-reset fw-bold" href="http://6solutions.com/">6solutions.com</a>
-    </div>
-</footer>
+    </header>
+    <main class="container mt-5">
+        <section class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">NAME</th>
+                    <th scope="col">QUANTITY</th>
+                    <th scope="col">CATEGORY</th>
+                    <th scope="col">PROVIDER</th>
+                    <th scope="col">COST PRICE</th>
+                    <th scope="col">UNIT PRICE</th>
+                    <th scope="col">IMAGE</th>
+                    <th scope="col">QRCODE</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="product : ${productvue}">
+                    <td th:text="${product.name}"></td>
+                    <td th:text="${product.quantity}"></td>
+                    <td th:text="${product.category.name}"></td>
+                    <td th:text="${product.provider}"></td>
+                    <td th:text="${product.unit_cost}"></td>
+                    <td th:text="${product.unit_price}"></td>
+                    <td><img alt="Product Image" th:src="|data:image/jpeg;base64,${product.image}|"
+                             class="img-thumbnail"></td>
+                    <td><img alt="Product QRCode" th:src="|data:image/jpeg;base64,${product.qrcode}|"
+                             class="img-thumbnail"></td>
+                    <td>
+                        <form th:action="@{/deleteProduct}" method="post">
+                            <input type="hidden" name="productId" th:value="${product.id}">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <button class="btn btn-primary float-end" onclick="window.print()">Imprimer</button>
+        </section>
+
+    </main>
+    <footer class="text-center text-lg-start bg-light text-muted" id="footer">
+        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+            © 2024 Copyright
+        </div>
+    </footer>
+</div>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         var successMessage = document.querySelector(".alert-danger");
         var productsListButton = document.querySelector(".nav-link[href='/createProduct']");
         var excelSheetButton = document.querySelector(".nav-link[href='/Excelsheet']");
@@ -147,7 +154,7 @@
             productsListButton.style.marginTop = successMessage.offsetHeight + "px";
             excelSheetButton.style.marginTop = successMessage.offsetHeight + "px";
             // Masquer le message de succès après 5 secondes (5000 millisecondes)
-            setTimeout(function() {
+            setTimeout(function () {
                 successMessage.style.display = "none";
                 // Réinitialiser la marge supérieure du bouton "Products List"
                 productsListButton.style.marginTop = "0";
@@ -155,5 +162,7 @@
         }
     });
 </script>
+
+
 </body>
 </html>

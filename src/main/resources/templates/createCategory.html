@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}"/>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category Creation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa; /* Bootstrap background color */
+            color: #495057; /* Bootstrap text color */
+        }
+
+        .navbar {
+            background-color: #fff; /* White background for navbar */
+            border-bottom: 1px solid #dee2e6; /* Bootstrap border color */
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+        }
+
+        .jumbotron {
+            background-color: #e9ecef; /* Light grey background for jumbotron */
+            border-radius: 10px; /* Rounded corners */
+            padding: 20px;
+            margin-bottom: 20px; /* Space between header and main content */
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ced4da; /* Bootstrap input border color */
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff; /* Blue primary button */
+            border: none;
+            border-radius: 5px;
+            color: #fff; /* White text color */
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
+        }
+
+        footer {
+            background-color: #f8f9fa; /* Light grey background for footer */
+            color: #6c757d; /* Grey text color for footer */
+            margin-top: 10px;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .success-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            text-align: center;
+            padding: 10px 0;
+            background-color: #28a745; /* Couleur de fond verte pour le message de succès */
+            color: #fff; /* Couleur du texte blanc pour le message de succès */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombre légère pour la profondeur */
+        }
+
+        main {
+            margin-top: 40px; /* Ajoute de la marge en haut du contenu principal */
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <header>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse " id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/createProduct}">Product</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/listCategory}">Categories List</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Navbar -->
+
+        <!-- Jumbotron -->
+        <div class="jumbotron text-center">
+            <h1 class="mb-3">Category Creation</h1>
+        </div>
+        <!-- Jumbotron -->
+
+
+    </header>
+    <main class="container mt-5">
+        <form th:action="@{/saveCategory}" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="Name">Name:</label>
+                <input type="text" id="Name" name="Name" required>
+            </div>
+            <div class="mb-3">
+                <label for="Unit">Unit:</label>
+                <input type="text" id="Unit" name="Unit" required>
+            </div>
+            <div>
+                <input type="submit" value="Save">
+            </div>
+        </form>
+    </main>
+    <footer class="text-center text-lg-start bg-light text-muted">
+        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+            © 2024 Copyright
+        </div>
+    </footer>
+</div>
+</body>
+</html>
