@@ -115,7 +115,9 @@
         </div>
         <!-- Jumbotron -->
 
-
+        <div th:if="${successMessage}" class="alert alert-success success-message" role="alert">
+            <p th:text="${successMessage}"></p>
+        </div>
     </header>
     <main class="container mt-5">
         <form th:action="@{/saveCategory}" method="post" enctype="multipart/form-data">
@@ -138,5 +140,23 @@
         </div>
     </footer>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var successMessage = document.querySelector(".success-message");
+        var productsButton = document.querySelector(".nav-link[href='/createProduct']");
+        var categoriesListButton = document.querySelector(".nav-link[href='/listCategory']");
+        if (successMessage && productsButton && categoriesListButton) {
+            productsButton.style.marginTop = successMessage.offsetHeight + "px";
+            categoriesListButton.style.marginTop = successMessage.offsetHeight + "px";
+            // Masquer le message de succès après 5 secondes (5000 millisecondes)
+            setTimeout(function() {
+                successMessage.style.display = "none";
+                // Réinitialiser la marge supérieure du bouton "Products List"
+                productsButton.style.marginTop = "0";
+                categoriesListButton.style.marginTop = "0";
+            }, 2000);
+        }
+    });
+</script>
 </body>
 </html>

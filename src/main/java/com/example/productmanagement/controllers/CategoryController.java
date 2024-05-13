@@ -2,6 +2,7 @@ package com.example.productmanagement.controllers;
 
 import com.example.productmanagement.Entities.Category;
 import com.example.productmanagement.Entities.Product;
+import com.example.productmanagement.services.CategoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -18,8 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CategoryController {
     @Qualifier("defaultCategoryService")
-    private com.example.productmanagement.services.CategoryService CategoryService;
-
+    private CategoryService CategoryService;
     @RequestMapping("/createCategory")
     public String createCategory(Model model) {
         model.addAttribute("categoryVue", new Category());
@@ -27,7 +27,7 @@ public class CategoryController {
     }
     @RequestMapping("/saveCategory")
     public String saveCategory(@ModelAttribute("categoryVue") Category categoryController, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("categorySuccess", "Category saved successfully!");
+        redirectAttributes.addFlashAttribute("successMessage", "Category saved successfully!");
         // Save the product again to update the QR code
         CategoryService.saveCategory(categoryController);
         return "redirect:createCategory";

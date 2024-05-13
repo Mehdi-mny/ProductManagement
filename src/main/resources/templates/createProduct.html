@@ -180,13 +180,19 @@
     document.addEventListener("DOMContentLoaded", function() {
         var successMessage = document.querySelector(".success-message");
         var productsListButton = document.querySelector(".nav-link[href='/listProduct']");
-        if (successMessage && productsListButton) {
+        var ExcelButton = document.querySelector(".nav-link[href='/Excelsheet']");
+        var categoryButton = document.querySelector(".nav-link[href='/createCategory']");
+        if (successMessage && productsListButton && ExcelButton && categoryButton) {
             productsListButton.style.marginTop = successMessage.offsetHeight + "px";
+            ExcelButton.style.marginTop = successMessage.offsetHeight + "px";
+            categoryButton.style.marginTop = successMessage.offsetHeight + "px";
             // Masquer le message de succès après 5 secondes (5000 millisecondes)
             setTimeout(function() {
                 successMessage.style.display = "none";
                 // Réinitialiser la marge supérieure du bouton "Products List"
                 productsListButton.style.marginTop = "0";
+                categoryButton.style.marginTop = "0";
+                ExcelButton.style.marginTop = "0";
             }, 2000);
         }
     });

@@ -149,10 +149,8 @@
     document.addEventListener("DOMContentLoaded", function () {
         var successMessage = document.querySelector(".alert-danger");
         var productsListButton = document.querySelector(".nav-link[href='/createProduct']");
-        var excelSheetButton = document.querySelector(".nav-link[href='/Excelsheet']");
-        if (successMessage && productsListButton && excelSheetButton) {
+        if (successMessage && productsListButton ) {
             productsListButton.style.marginTop = successMessage.offsetHeight + "px";
-            excelSheetButton.style.marginTop = successMessage.offsetHeight + "px";
             // Masquer le message de succès après 5 secondes (5000 millisecondes)
             setTimeout(function () {
                 successMessage.style.display = "none";
