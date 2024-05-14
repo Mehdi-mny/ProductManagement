@@ -21,8 +21,7 @@ public class CategoryController {
     @Qualifier("defaultCategoryService")
     private CategoryService CategoryService;
     @RequestMapping("/createCategory")
-    public String createCategory(Model model) {
-        model.addAttribute("categoryVue", new Category());
+    public String createCategory() {
         return "createCategory"; // Nom de la vue du formulaire
     }
     @RequestMapping("/saveCategory")
@@ -34,10 +33,8 @@ public class CategoryController {
     }
     @RequestMapping("/deleteCategory")
     public String deleteCategory(@RequestParam("productId") Long categoryId, RedirectAttributes redirectAttributes) {
-        // Call your CategoryService method to delete the product by ID
         CategoryService.deleteCategory(categoryId);
         redirectAttributes.addFlashAttribute("categoryDeleteMessage", "Category deleted successfully!");
-        // Redirect to the category list page after deletion
         return "redirect:/listCategory";
     }
 

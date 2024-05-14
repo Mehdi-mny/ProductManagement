@@ -10,6 +10,8 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import lombok.AllArgsConstructor;
+import net.sourceforge.tess4j.Tesseract;
+import net.sourceforge.tess4j.TesseractException;
 import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -21,9 +23,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @AllArgsConstructor
@@ -42,9 +47,11 @@ public class ProductController {
         return "createProduct";
     }
     @RequestMapping("/saveProduct")
-    public String saveProduct(@ModelAttribute("productVue") Product productController, RedirectAttributes redirectAttributes, @RequestParam("imageFile") MultipartFile image) throws IOException, WriterException {
+    public String saveProduct(@ModelAttribute("productVue") Product productController, RedirectAttributes redirectAttributes, @RequestParam("imageFile") MultipartFile image) throws IOException, WriterException, TesseractException {
         // Generate the QR code
         redirectAttributes.addFlashAttribute("successMessage", "Product saved successfully!");
+
+
         // Save the product again to update the QR code
         ProductService.saveProduct(productController,image);
         return "redirect:createProduct";

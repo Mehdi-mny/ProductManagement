@@ -6,9 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.awt.*;
-import java.sql.Blob;
-import java.util.Base64;
+
 
 @Entity
 @Data
