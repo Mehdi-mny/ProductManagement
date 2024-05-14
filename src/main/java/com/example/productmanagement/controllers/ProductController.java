@@ -73,7 +73,7 @@ public class ProductController {
     @RequestMapping("/upload-Products")
     public String uploadProducts(@ModelAttribute("fileForm") MultipartFile file,@ModelAttribute("imageFile") MultipartFile image){
         this.ProductService.saveProductsFromExcel(file);
-        return "redirect:listProduct";
+        return "UploadFromExcel";
     }
     @GetMapping("/Excelsheet")
     public String ExcelSheet(){

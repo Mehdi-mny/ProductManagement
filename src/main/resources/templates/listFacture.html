@@ -1,0 +1,150 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factures List</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}"/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa; /* Bootstrap background color */
+            color: #495057; /* Bootstrap text color */
+        }
+
+        .navbar {
+            background-color: #fff; /* White background for navbar */
+        }
+
+        .jumbotron {
+            background-color: #e9ecef; /* Light grey background for jumbotron */
+        }
+
+        .container {
+            margin-top: 20px; /* Space between header and main content */
+        }
+
+        .table th,
+        .table td {
+            vertical-align: middle; /* Align table cell content vertically centered */
+        }
+
+        .img-thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 50%; /* Circular thumbnails */
+        }
+
+        .btn-primary {
+            background-color: #007bff; /* Blue primary button */
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0069d9; /* Darker blue on hover */
+            border-color: #0062cc;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
+        }
+
+        footer {
+            background-color: #f8f9fa; /* Light grey background for footer */
+            color: #6c757d;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .alert-danger {
+            position: fixed;
+            top: 0; /* Positionnez le message en haut de la page */
+            left: 0;
+            width: 100%;
+            z-index: 1000; /* Assurez-vous que le message s'affiche au-dessus de tout le contenu */
+            text-align: center;
+            padding: 10px 0;
+            background-color: #721c24; /* Couleur de fond rouge pour le message */
+            color: #fff; /* Couleur du texte blanc pour le message */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombre légère pour la profondeur */
+        }
+    </style>
+</head>
+
+<body>
+<div th:if="${FactureDeleteMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <span th:text="${FactureDeleteMessage}"></span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<div class="wrapper">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse justify-content-end" id="navbarExample02">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/scanFacture}">Back</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <section class="jumbotron p-1 text-center bg-light">
+            <h1 class="mb-3">Factures List </h1>
+        </section>
+
+    </header>
+    <main class="container mt-5">
+        <section class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">TOTAL TTC</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="facture : ${facturevue}">
+                    <td th:text="${facture.id}"></td>
+                    <td th:text="${facture.total}"></td>
+                    <td>
+                        <form th:action="@{/deletefacture}" method="post">
+                            <input type="hidden" name="factureID" th:value="${facture.id}">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <button class="btn btn-primary float-end" onclick="window.print()">Imprimer</button>
+        </section>
+
+    </main>
+    <footer class="text-center text-lg-start bg-light text-muted" id="footer">
+        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+            © 2024 Copyright
+        </div>
+    </footer>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var FactureDeleteMessage = document.querySelector(".alert-danger");
+        var scanButton = document.querySelector(".nav-link[href='/scanFacture']");
+        if (FactureDeleteMessage && scanButton ) {
+            scanButton.style.marginTop = FactureDeleteMessage.offsetHeight + "px";
+            // Masquer le message de succès après 5 secondes (5000 millisecondes)
+            setTimeout(function () {
+                FactureDeleteMessage.style.display = "none";
+                // Réinitialiser la marge supérieure du bouton "Products List"
+                scanButton.style.marginTop = "0";
+            }, 3000);
+        }
+    });
+</script>
+</body>
+</html>

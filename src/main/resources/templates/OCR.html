@@ -106,15 +106,15 @@
                 <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/Excelsheet}">Create with Excel</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/listProduct}">Products List</a>
+                            <a class="nav-link" th:href="@{/listfacture}">Factures list</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/createCategory}">Category</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/createProduct}">Product</a>
                         </li>
                     </ul>
                 </div>
@@ -124,10 +124,12 @@
 
         <!-- Jumbotron -->
         <div class="jumbotron text-center">
-            <h1 class="mb-3">Facture</h1>
+            <h1 class="mb-3">Scanner votre Facture</h1>
         </div>
         <!-- Jumbotron -->
-
+        <div th:if="${successMessage}" class="alert alert-success success-message" role="alert">
+            <p th:text="${successMessage}"></p>
+        </div>
     </header>
     <main class="container mt-5">
         <form th:action="@{/saveFacture}" method="post" enctype="multipart/form-data">
@@ -146,6 +148,26 @@
         </div>
     </footer>
 </div>
-
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var successMessage = document.querySelector(".success-message");
+        var productsButton = document.querySelector(".nav-link[href='/createProduct']");
+        var scanButton = document.querySelector(".nav-link[href='/listfacture']");
+        var categoryButton = document.querySelector(".nav-link[href='/createCategory']");
+        if (successMessage && categoryButton && productsButton && scanButton) {
+            productsButton.style.marginTop = successMessage.offsetHeight + "px";
+            categoryButton.style.marginTop = successMessage.offsetHeight + "px";
+            scanButton.style.marginTop = successMessage.offsetHeight + "px";
+            // Masquer le message de succès après 5 secondes (5000 millisecondes)
+            setTimeout(function() {
+                successMessage.style.display = "none";
+                // Réinitialiser la marge supérieure du bouton "Products List"
+                productsButton.style.marginTop = "0";
+                scanButton.style.marginTop = "0";
+                categoryButton.style.marginTop = "0";
+            }, 2000);
+        }
+    });
+</script>
 </body>
 </html>
