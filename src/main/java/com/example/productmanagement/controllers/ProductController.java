@@ -71,9 +71,10 @@ public class ProductController {
         return "listProduct";
     }
     @RequestMapping("/upload-Products")
-    public String uploadProducts(@ModelAttribute("fileForm") MultipartFile file,@ModelAttribute("imageFile") MultipartFile image){
+    public String uploadProducts(@ModelAttribute("fileForm") MultipartFile file, RedirectAttributes redirectAttributes){
+        redirectAttributes.addFlashAttribute("successMessage", "Products saved successfully!");
         this.ProductService.saveProductsFromExcel(file);
-        return "UploadFromExcel";
+        return "redirect:Excelsheet";
     }
     @GetMapping("/Excelsheet")
     public String ExcelSheet(){

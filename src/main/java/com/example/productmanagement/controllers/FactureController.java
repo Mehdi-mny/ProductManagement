@@ -87,7 +87,7 @@ public class FactureController {
         redirectAttributes.addFlashAttribute("successMessage", "Facture saved successfully!");
 
         factureService.saveFacture(facture);
-        return "OCR";
+        return "redirect:/scanFacture";
     }
 
     @RequestMapping("/deletefacture")

@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 @Qualifier("defaultCategoryService")
 public interface CategoryService {
-    Category saveCategory(Category Category);
+    void saveCategory(Category Category);
     Category updateCategory(Category Category);
     void deleteCategory(Long Id);
     void deleteAllCategories();

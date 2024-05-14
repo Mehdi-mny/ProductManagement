@@ -9,7 +9,7 @@
         display: flex;
         flex-direction: column;
         min-height: 100%;
-    }
+        }
 
         footer {
             background-color: #f8f9fa; /* Light grey background for footer */
@@ -17,6 +17,18 @@
             margin-top: 10px;
             bottom: 0;
             width: 100%;
+        }
+        .success-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            text-align: center;
+            padding: 10px 0;
+            background-color: #28a745; /* Couleur de fond verte pour le message de succès */
+            color: #fff; /* Couleur du texte blanc pour le message de succès */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombre légère pour la profondeur */
         }
     </style>
 </head>
@@ -53,6 +65,9 @@
         <h1 class="mb-3">Upload Products Data From Excel </h1>
     </div>
     <!-- Jumbotron -->
+    <div th:if="${successMessage}" class="alert alert-success success-message" role="alert">
+        <p th:text="${successMessage}"></p>
+    </div>
 </header>
 
 <main class="container mt-5">
@@ -71,5 +86,21 @@
     </div>
 </footer>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var successMessage = document.querySelector(".success-message");
+        var productsButton = document.querySelector(".nav-link[href='/createProduct']");
+        if (successMessage && productsButton) {
+            productsButton.style.marginTop = successMessage.offsetHeight + "px";
+
+            // Masquer le message de succès après 5 secondes (5000 millisecondes)
+            setTimeout(function() {
+                successMessage.style.display = "none";
+                // Réinitialiser la marge supérieure du bouton "Products List"
+                productsButton.style.marginTop = "0";
+            }, 2000);
+        }
+    });
+</script>
 </body>
 </html>

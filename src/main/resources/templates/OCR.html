@@ -18,10 +18,6 @@
             border-bottom: 1px solid #dee2e6; /* Bootstrap border color */
         }
 
-        .navbar-brand {
-            font-weight: bold;
-        }
-
         .jumbotron {
             background-color: #e9ecef; /* Light grey background for jumbotron */
             border-radius: 10px; /* Rounded corners */
@@ -132,15 +128,13 @@
         </div>
     </header>
     <main class="container mt-5">
-        <form th:action="@{/saveFacture}" method="post" enctype="multipart/form-data">
-            <div class="mb-3">
-                <label for="image">Image:</label>
-                <input type="file" id="image" name="imageFile" required>
-            </div>
-            <div>
-                <input type="submit" value="Save">
-            </div>
-        </form>
+    <!-- Formulaire pour télécharger le fichier Excel -->
+    <form th:action="@{/saveFacture}" th:object="${fileForm}" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <input class="form-control" type="file" id="imageFile" name="imageFile" accept=".png, .jpeg">
+        </div>
+        <button class="btn btn-primary" type="submit">Upload</button>
+    </form>
     </main>
     <footer class="text-center text-lg-start bg-light text-muted">
         <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
