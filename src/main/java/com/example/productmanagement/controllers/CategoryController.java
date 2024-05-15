@@ -26,19 +26,19 @@ public class CategoryController {
     public String saveCategory(@ModelAttribute("categoryVue") Category categoryController, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("successMessage", "Category saved successfully!");
         CategoryService.saveCategory(categoryController);
-        return "redirect:createCategory";
+        return "createCategory";
     }
     @RequestMapping("/deleteCategory")
-    public String deleteCategory(@RequestParam("productId") Long categoryId, RedirectAttributes redirectAttributes) {
+    public String deleteCategory(@ModelAttribute("productId") Long categoryId, RedirectAttributes redirectAttributes) {
         CategoryService.deleteCategory(categoryId);
         redirectAttributes.addFlashAttribute("categoryDeleteMessage", "Category deleted successfully!");
-        return "redirect:/listCategory";
+        return "redirect:listCategory";// redirection vers l' url de listcategory
     }
 
     @RequestMapping("/listCategory")
     public String listProduct(ModelMap modelMap){
         List<Category> categoryList = CategoryService.findAllCategories();
         modelMap.addAttribute("categoryvue", categoryList);
-        return "listCategory";
+        return "listCategory";//nom de la vue
     }
 }

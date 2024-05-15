@@ -18,13 +18,13 @@ public class ExcelUploadService {
     private static CategoryRepository categoryRepository = null;
 
     public ExcelUploadService(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
+        ExcelUploadService.categoryRepository = categoryRepository;
     }
 
     public static boolean isValidExcelFile(MultipartFile file){
         return Objects.equals(file.getContentType(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" );
     }
-    public static <XSSFDataBlob> List<Product> getProductsDataFromExcel(InputStream inputStream) {
+    public static List<Product> getProductsDataFromExcel(InputStream inputStream) {
         List<Product> products = new ArrayList<>();
         try {
             XSSFWorkbook workbook = new XSSFWorkbook(inputStream);

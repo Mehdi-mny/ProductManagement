@@ -19,6 +19,8 @@ import java.util.List;
 @AllArgsConstructor
 public class ProductServiceImpl implements ProductService{
     private ProductRepository productRepository;
+
+    // Save avec image
     @Override
     public void saveProduct(Product Product, MultipartFile file) throws IOException, WriterException {
         Product.setImage(Base64.getEncoder().encodeToString(file.getBytes()));
@@ -26,6 +28,7 @@ public class ProductServiceImpl implements ProductService{
         Product.setQrcode(Base64.getEncoder().encodeToString(this.qrcode(Product)));
         productRepository.save(Product);
     }
+    // save sans image
     public void saveProduct(Product Product) throws IOException, WriterException {
         // Set the QR code bytes in the product object
         Product.setQrcode(Base64.getEncoder().encodeToString(this.qrcode(Product)));
@@ -39,6 +42,13 @@ public class ProductServiceImpl implements ProductService{
         // Set the QR code bytes in the product object
 
         return generateQRCode(qrCodeData);
+    }
+    private byte[] generateQRCode(String data) throws IOException, WriterException {
+        QRCodeWriter writer = new QRCodeWriter();
+        BitMatrix matrix = writer.encode(data, BarcodeFormat.QR_CODE, 2, 2);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        MatrixToImageWriter.writeToStream(matrix, "jpeg", outputStream);
+        return outputStream.toByteArray();
     }
     @Override
     public Product updateProduct(Product Product) {
@@ -79,11 +89,5 @@ public class ProductServiceImpl implements ProductService{
             }
         }
     }
-    private byte[] generateQRCode(String data) throws IOException, WriterException {
-        QRCodeWriter writer = new QRCodeWriter();
-        BitMatrix matrix = writer.encode(data, BarcodeFormat.QR_CODE, 2, 2);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        MatrixToImageWriter.writeToStream(matrix, "jpeg", outputStream);
-        return outputStream.toByteArray();
-    }
+
 }

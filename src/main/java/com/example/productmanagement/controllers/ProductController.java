@@ -43,22 +43,16 @@ public class ProductController {
     public String createProduct(ModelMap model) {
         List<Category> categoriesList = CategoryService.findAllCategories();
         model.addAttribute("categoriesList", categoriesList);
-
         return "createProduct";
     }
     @RequestMapping("/saveProduct")
     public String saveProduct(@ModelAttribute("productVue") Product productController, RedirectAttributes redirectAttributes, @RequestParam("imageFile") MultipartFile image) throws IOException, WriterException, TesseractException {
-        // Generate the QR code
         redirectAttributes.addFlashAttribute("successMessage", "Product saved successfully!");
-
-
-        // Save the product again to update the QR code
         ProductService.saveProduct(productController,image);
         return "redirect:createProduct";
     }
     @RequestMapping("/deleteProduct")
-    public String deleteProduct(@RequestParam("productId") Long productId, RedirectAttributes redirectAttributes) {
-        // Call your ProductService method to delete the product by ID
+    public String deleteProduct(@ModelAttribute("productId") Long productId, RedirectAttributes redirectAttributes) {
         ProductService.deleteProduct(productId);
         redirectAttributes.addFlashAttribute("deleteMessage", "Product deleted successfully!");
         // Redirect to the product list page after deletion
@@ -76,7 +70,7 @@ public class ProductController {
         this.ProductService.saveProductsFromExcel(file);
         return "redirect:Excelsheet";
     }
-    @GetMapping("/Excelsheet")
+    @RequestMapping("/Excelsheet")
     public String ExcelSheet(){
         return "UploadFromExcel";}
 }
