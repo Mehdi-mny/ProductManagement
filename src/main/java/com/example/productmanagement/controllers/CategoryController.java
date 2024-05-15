@@ -26,7 +26,7 @@ public class CategoryController {
     public String saveCategory(@ModelAttribute("categoryVue") Category categoryController, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("successMessage", "Category saved successfully!");
         CategoryService.saveCategory(categoryController);
-        return "createCategory";
+        return "redirect:createCategory";
     }
     @RequestMapping("/deleteCategory")
     public String deleteCategory(@ModelAttribute("productId") Long categoryId, RedirectAttributes redirectAttributes) {
